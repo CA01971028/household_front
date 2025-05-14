@@ -11,11 +11,12 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import 'chartjs-adapter-date-fns'; // ✅ 必須！← 時間軸を使うため
+import 'chartjs-adapter-date-fns'; 
+import type { ChartOptions } from 'chart.js';
 
 // Chart.js モジュール登録
 ChartJS.register(
-  TimeScale,        // ✅ CategoryScale ではなく TimeScale を使う
+  TimeScale,        
   LinearScale,
   PointElement,
   LineElement,
@@ -70,7 +71,7 @@ const data = {
   ],
 };
 
-const options = {
+const options: ChartOptions<'line'> = {
   responsive: true,
   maintainAspectRatio: false, 
   plugins: {
