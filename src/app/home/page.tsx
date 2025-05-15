@@ -22,7 +22,7 @@ const page = () => {
                 <Glaf/>
             </div>
             
-            <div className="w-[95vw] h-[35svh] md:h-[33svh] mt-3.5 mx-auto rounded-lg" style={{backgroundColor:'rgba(217, 217, 217, 1)'}}>
+            <div className="w-[98vw] h-[35svh] md:h-[33svh] mt-3.5 mx-auto rounded-lg" style={{backgroundColor:'rgba(217, 217, 217, 1)'}}>
                 <div className="flex flex-col">
                     <div className="text-3xl ml-4">Recentry</div>
                     <Cards/>
