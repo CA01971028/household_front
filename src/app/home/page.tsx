@@ -4,7 +4,7 @@ import Cards from "../../components/Cards"
 
 const page = () => {
     return (
-        <div className="h-svh w-screen bg-green-300">
+        <div className="h-[100svh] w-screen bg-green-300">
             <div className="flex flex-col">
                 <div className="flex flex-row justify-around pt-4">
                     <div className="w-[48vw] md:w-[40vw] rounded-md flex flex-col" style={{backgroundColor:'rgba(245, 245, 245, 1)'}}>
