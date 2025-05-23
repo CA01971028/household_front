@@ -51,17 +51,18 @@ const page = () => {
                         }}
                     >
                         {Array.from({ length: 20 }, (_, i) =>
-                            item.map((value, index) => (
-                                <div
-                                    key={`${i}-${index}`}
-                                    className={`py-2 border-b text-sm ${
-                                        i % 2 === 0 ? 'bg-gray-100' : 'bg-white'
-                                    }`}
-                                >
-                                    {value}
-                                </div>
-                            ))
+                        item.map((value, index) => (
+                            <div
+                            key={`${i}-${index}`}
+                            className={`border-b h-[10svh] text-xl flex items-center justify-center ${
+                                i % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                            }`}
+                            >
+                            {value}
+                            </div>
+                        ))
                         )}
+
                     </div>
                 </div>
             <div className="absolute w-screen bottom-0 h-[15svh]" style={{ backgroundColor: 'rgba(239, 239, 239, 1)' }}>
