@@ -20,6 +20,7 @@
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
     "react-month-picker-simple": "^1.0.8",
+    "recharts": "^2.15.3",
     "tailwind-scrollbar-hide": "^2.0.0"
   },
   "devDependencies": {

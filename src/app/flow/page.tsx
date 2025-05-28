@@ -1,4 +1,6 @@
 import ButtonIcon from "@/components/ButtonIcon";
+import Hist from "../../components/Hist"
+import Circle from "../../components/Circle"
 
 const page = () => {
     //グリッドの項目を定義
@@ -33,6 +35,7 @@ const page = () => {
                     </div>
                 </div>
             </div>
+            <div className="md:flex md:flex-col items-center">
                 {/* item */}
                 <div className="w-[90vw] mt-4 mx-auto bg-white rounded-lg">
                     {/* ヘッダー（固定表示） */}
@@ -41,9 +44,8 @@ const page = () => {
                         <div key={index} className="py-2">{value}</div>
                         ))}
                     </div>
-
                     {/* スクロールする中身 */}
-                    <div className="grid grid-cols-4 text-center h-[36svh]"
+                    <div className="grid grid-cols-4 text-center h-[30svh]"
                         style={{
                             overflowY: 'scroll',
                             scrollbarWidth: 'none',
@@ -54,17 +56,24 @@ const page = () => {
                         item.map((value, index) => (
                             <div
                             key={`${i}-${index}`}
-                            className={`border-b h-[10svh] text-xl flex items-center justify-center ${
+                            className={`border-b h-[5svh] text-sm flex items-center justify-center ${
                                 i % 2 === 0 ? 'bg-gray-100' : 'bg-white'
                             }`}
                             >
-                            {value}
+                                {value}
                             </div>
                         ))
                         )}
 
                     </div>
                 </div>
+                <div className="flex flex-row p-2 md:w-[60vw]">
+                    <Hist/>
+                    <Circle/>
+                </div>
+            </div>
+
+
             <div className="absolute w-screen bottom-0 h-[15svh]" style={{ backgroundColor: 'rgba(239, 239, 239, 1)' }}>
                 <ButtonIcon name = {"flow"}/>
             </div>
