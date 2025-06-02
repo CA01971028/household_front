@@ -11,18 +11,18 @@ interface CardItemProps {
 
 const CardItem = ({ date, label, amount, image }: CardItemProps) => (
   <>
-      <div className="flex items-center gap-4 mb-1 p-4 border border-gray-300 rounded-lg shadow-sm bg-white">
+      <div className="flex items-center gap-4 mb-1 border border-gray-300 rounded-lg shadow-sm bg-white">
         {image === "true" ? (
           <Image
             src={flyManey}
             alt={`${label}アイコン`}
-            className="w-16 h-16 md:w-20 md:h-20 ml-6 bg-blue-50 rounded-lg border border-black object-contain"
+            className="w-12 h-w-12 md:w-20 md:h-20 ml-6 bg-blue-50 rounded-lg border border-black object-contain"
           />
         ) : (
           <Image
             src={getmaney}
             alt={`${label}アイコン`}
-            className="w-16 h-16 md:w-20 md:h-20 ml-6 bg-blue-50 rounded-lg border border-black object-contain"
+            className="w-12 h-12 md:w-20 md:h-20 ml-6 bg-blue-50 rounded-lg border border-black object-contain"
           />
         )}
 

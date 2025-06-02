@@ -7,6 +7,7 @@ const Cards = () => {
       <CardItem date="4/18" label="買い物" amount="￥2,500" image="true" />
       <CardItem date="4/18" label="給料" amount="￥2,500" image="false" />
       <CardItem date="4/18" label="買い物" amount="￥2,500" image="true" />
+      <CardItem date="4/18" label="買い物" amount="￥2,500" image="true" />
     </div>
   );
 };
