@@ -1,12 +1,18 @@
 'use client';
 import { useState, useRef, useEffect } from "react";
 
+// カテゴリーでヒットする物を指定
 const presetCategories: string[] = ['食費', '交通費', '娯楽', '光熱費'];
 
 const AddForm = () => {
-  const [input, setInput] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+    // カテゴリーの中に入っている文字を格納
+    const [input, setInput] = useState('');
+    // ドロップダウンを管理
+    const [showDropdown, setShowDropdown] = useState(false);
+    // 金額を管理
+    const [amount,setAmount] = useState<string>('');
+    // 指定した要素以外のクリックを管理
+    const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,7 +57,7 @@ const AddForm = () => {
             setShowDropdown(true);
           }}
           onFocus={() => setShowDropdown(true)}
-          placeholder="カテゴリーを入力または選択"
+          placeholder="カテゴリーを入力!"
           className="w-full p-2 border rounded-md text-lg"
         />
 
@@ -75,13 +81,27 @@ const AddForm = () => {
         )}
       </div>
 
-      {/* 金額 */}
-      <div className="font-bold text-center col-span-1 h-full flex items-center justify-center">金額</div>
-      <input type="number" className="text-center col-span-2 h-full flex items-center justify-center rounded-md p-2 text-lg" />
+        {/* 金額 */}
+        <div className="font-bold text-center col-span-1 h-full flex items-center justify-center">金額</div>
+        <input
+        type="text"
+        value={amount ? `￥${Number(amount).toLocaleString()}` : '￥'}
+        onChange={(e) => {
+            // 入力から数字だけを抽出（0-9 以外を削除）
+            const rawValue = e.target.value.replace(/[^\d]/g, '');
+            setAmount(rawValue);
+        }}
+        className=" col-span-2 h-[6svh] flex items-center justify-center rounded-md my-auto p-2 text-lg border"
+        />
 
-      {/* メモ */}
-      <div className="font-bold text-center col-span-1 h-full flex items-center justify-center">メモ</div>
-      <input type="text" className="text-center col-span-2 h-full flex items-center justify-center rounded-md p-2 text-lg" />
+
+        {/* メモ */}
+        <div className="font-bold text-center col-span-1 h-full flex items-center justify-center">メモ</div>
+        <textarea
+        className="col-span-2 h-full rounded-md p-2 text-lg border resize-none"
+        rows={3}
+        placeholder="購入の詳細を入力..."
+        />
     </div>
   );
 };
