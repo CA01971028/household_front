@@ -1,40 +1,47 @@
 'use client';
+
 import {
   PieChart,
   Pie,
   Cell,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
+import React from 'react';
 
+// カテゴリーと金額の型
 type CategoryExpense = {
   category: string;
   amount: number;
 };
 
-const expenseData: CategoryExpense[] = [
-  { category: '食費', amount: 15000 },
-  { category: '交通費', amount: 5000 },
-  { category: '娯楽', amount: 3000 },
-  { category: '光熱費', amount: 7000 },
-  { category: '通信費光熱費', amount: 4000 },
-];
+// propsの型
+type CircleProps = {
+  expenseData: CategoryExpense[];
+  width:string;
+  height:string;
+  budget:boolean;
+};
 
+// 色配列
 const COLORS = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#FF9F1C'];
 
-const renderCustomLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  index
-}: any) => {
+// カスタムラベル描画関数
+const renderCustomLabel = (
+  props: any
+) => {
+  const {
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    index,
+    payload
+  } = props;
+
   const RADIAN = Math.PI / 180;
-  // ラベル位置をさらに外にずらす（今の1.1 → 1.3に）
-  const radius = innerRadius + (outerRadius - innerRadius) * 1.3; 
+  const radius = innerRadius + (outerRadius - innerRadius) * 1.3;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -47,35 +54,59 @@ const renderCustomLabel = ({
       dominantBaseline="central"
       fontSize={10}
     >
-      {expenseData[index].category}
+      {payload.category}
     </text>
   );
 };
 
-const Circle = () => {
+// メインコンポーネント
+const Circle = ({ expenseData, width, height, budget }: CircleProps) => {
   return (
-          <div className="w-[55vw] h-[28svh] bg-white rounded-lg rounded-l-none overflow-visible">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={expenseData}
-                  dataKey="amount"
-                  nameKey="category"
-                  cx="50%" // ←中央に戻す
-                  cy="50%"
-                  outerRadius={50}
-                  labelLine={false}
-                  label={renderCustomLabel}
-                >
-                  {expenseData.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+    <div className={`${width} ${height} bg-white rounded-lg rounded-l-none overflow-visible flex items-center`}>
+      {/* グラフエリア（左） */}
+      <div className={`${budget ?("w-1/2"):("w-full")} h-full`}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={expenseData}
+              dataKey="amount"
+              nameKey="category"
+              cx="50%"
+              cy="50%"
+              outerRadius={50}
+              labelLine={false}
+              label={budget ? false : renderCustomLabel}
+            >
+              {expenseData.map((_, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* カテゴリ一覧（右） */}
+      {budget &&(
+        <ul className="w-1/2 flex flex-col justify-center text-sm pl-2">
+        {expenseData.map((item, index) => (
+          <li key={index} className="flex items-center space-x-2 mb-1">
+            <span
+              className="w-3 h-3 rounded-full"
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            ></span>
+            <span>{item.category}</span>
+          </li>
+        ))}
+      </ul>
+      )}
+      
+    </div>
   );
 };
+
 
 export default Circle;

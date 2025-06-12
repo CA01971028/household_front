@@ -6,6 +6,19 @@ import Link from "next/link";
 import { useState } from "react";
 import Item from "../../components/Item"
 
+type CategoryExpense = {
+  category: string;
+  amount: number;
+};
+
+const expenseData: CategoryExpense[] = [
+  { category: '食費', amount: 15000 },
+  { category: '交通費', amount: 5000 },
+  { category: '娯楽', amount: 3000 },
+  { category: '光熱費', amount: 7000 },
+  { category: '通信費光熱費', amount: 4000 },
+];
+
 const page = () => {
     //グリッドの項目を定義
     const itemName:string[] = ["日付","カテゴリー","金額","メモ"];
@@ -74,7 +87,7 @@ const page = () => {
                 </div>
                 <div className="flex flex-row p-2 md:w-[60vw]">
                     <Hist/>
-                    <Circle/>
+                    <Circle expenseData = {expenseData} width = "w-[55vw]" height="h-[28svh]" budget={false}/>
                 </div>
             </div>
 
