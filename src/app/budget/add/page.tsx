@@ -55,7 +55,7 @@ const page = () => {
                     />
                 </div>
                 {/* カテゴリーを表示 */}
-                <div className="text-2xl mt-4 mx-auto">カテゴリ</div>
+                <div className="text-2xl mt-4 ml-4 mx-auto">カテゴリ</div>
                 <div className="flex justify-center mt-2">
                     <input
                     type="text"
@@ -67,7 +67,7 @@ const page = () => {
                     />
                 </div>
 
-                <div className="text-2xl mt-4 mx-auto">予算</div>
+                <div className="text-2xl mt-4 ml-4 mx-auto">予算</div>
                 <div className="flex justify-center mt-2">
                 <input
                     type="text"
@@ -86,7 +86,7 @@ const page = () => {
                     }}
                     onFocus={() => setIsEditingAmount(true)}
                     onBlur={() => setIsEditingAmount(false)}
-                    className="col-span-2 h-[6svh] flex items-center justify-center rounded-md my-auto p-2 text-lg border"
+                    className="col-span-2 w-[60vw] flex items-center justify-center rounded-md my-auto p-2 text-lg border"
                     required
                 />
                 </div>
