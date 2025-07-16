@@ -2,7 +2,43 @@ import ButtonIcon from "@/components/ButtonIcon";
 import Glaf from "../../components/Glaf"
 import Cards from "../../components/Cards"
 
+type homeResult = {
+    "date": string;
+    "label":string;
+    "amount":number;
+    "memo":string;
+}
+
+
 const page = () => {
+    // const demoData: homeResult[] = [
+    //     {
+    //         "date": "2023-10-01",
+    //         "label": "給与",
+    //         "amount": 2500,
+    //         "memo": "月々の給与"
+    //     },
+    //     {
+    //         "date": "2023-10-02",
+    //         "label": "食費",
+    //         "amount": -500,
+    //         "memo": "週ごとの食料品"
+    //     },
+    //     {
+    //         "date": "2023-10-03",
+    //         "label": "光熱費",
+    //         "amount": -300,
+    //         "memo": "電気代と水道代"
+    //     },
+    //     {
+    //         "date": "2023-10-04",
+    //         "label": "外食",
+    //         "amount": -200,
+    //         "memo": "友人と夕食"
+    //     }
+    // ]
+    const demoData: homeResult[] = []
+
     return (
         <div className="h-[100svh] w-screen bg-green-300">
             <div className="flex flex-col">
@@ -19,13 +55,13 @@ const page = () => {
             </div>
 
             <div className="w-[80vw] h-[30svh] mt-3.5 mx-auto rounded-lg " style={{backgroundColor:'rgba(248, 248, 248, 1)'}}>
-                <Glaf/>
+                <Glaf data = {demoData} />
             </div>
             
             <div className="w-[98vw] h-[35svh] md:h-[33svh] mt-3.5 mx-auto rounded-lg" style={{backgroundColor:'rgba(217, 217, 217, 1)'}}>
                 <div className="flex flex-col">
                     <div className="text-3xl ml-4">Recentry</div>
-                    <Cards/>
+                    <Cards data = {demoData} />
                 </div>
             </div>
 
