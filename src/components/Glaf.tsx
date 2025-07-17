@@ -108,7 +108,7 @@ const Glaf = ({ data }: Props) => {
         <Image
           src={notfound}
           alt="データがありません"
-          className="mx-auto"
+          className="mx-[20%]"
           width={210}
           height={210}
         />
