@@ -8,6 +8,9 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import React from 'react';
+import { isArrayEmpty } from '@/app/utils/arrayUtils';
+import Image from 'next/image';
+import notfound from "../../public/notfound2.png";
 
 // カテゴリーと金額の型
 type CategoryExpense = {
@@ -63,31 +66,43 @@ const renderCustomLabel = (
 const Circle = ({ expenseData, width, height, budget }: CircleProps) => {
   return (
     <div className={`${width} ${height} bg-white rounded-lg rounded-l-none overflow-visible flex items-center`}>
-      {/* グラフエリア（左） */}
-      <div className={`${budget ?("w-1/2"):("w-full")} h-full`}>
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={expenseData}
-              dataKey="amount"
-              nameKey="category"
-              cx="50%"
-              cy="50%"
-              outerRadius={50}
-              labelLine={false}
-              label={budget ? false : renderCustomLabel}
-            >
-              {expenseData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+      { !isArrayEmpty(expenseData) ? (
+          <div className={`${budget ?("w-1/2"):("w-full")} h-full`}>
+              <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                      <Pie
+                        data={expenseData}
+                        dataKey="amount"
+                        nameKey="category"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={50}
+                        labelLine={false}
+                        label={budget ? false : renderCustomLabel}
+                      >
+                        {expenseData.map((_, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      </PieChart>
+              </ResponsiveContainer>
+          </div>
+      ):(
+            <Image
+              src={notfound}
+              alt="データがありません"
+              className="mx-auto"
+              width={210}
+              height={210}
+            />
+      )
+
+      }
+
 
       {/* カテゴリ一覧（右） */}
       {budget &&(

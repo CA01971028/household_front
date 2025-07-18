@@ -3,34 +3,60 @@ import ButtonIcon from "@/components/ButtonIcon";
 import Hist from "../../components/Hist"
 import Circle from "../../components/Circle"
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Item from "../../components/Item"
+import { ENDPOINTS } from "@/path/PathObject";
 
-type CategoryExpense = {
-  category: string;
-  amount: number;
+
+type FlowResult = {
+    date: string;
+    label: string;
+    amount: number;
+    memo: string;
 };
 
-const expenseData: CategoryExpense[] = [
-  { category: '食費', amount: 15000 },
-  { category: '交通費', amount: 5000 },
-  { category: '娯楽', amount: 3000 },
-  { category: '光熱費', amount: 7000 },
-  { category: '通信費光熱費', amount: 4000 },
-];
 
 const page = () => {
     //グリッドの項目を定義
-    const itemName:string[] = ["日付","カテゴリー","金額","メモ"];
+    const itemName:string[] = ["日付","タグ","金額","メモ"];
     //表が表示する項目を定義
     const [itemFilter,setItemFilter] = useState<"All"|"Income"|"Expense">('All');
+    //任意のデータを取得
+    const [data, setData] = useState<FlowResult[]>([]);
+    //ローディングを管理
+    const [loading , setLoading] = useState<boolean>(true);
 
-    const [selectedMonth, setSelectedMonth] = useState<string>('2025-05');
+    const [selectedMonth, setSelectedMonth] = useState<string>('2025-06');
+
+    useEffect(() => {
+        const [year,month] = selectedMonth.split("-")
+        fetch(ENDPOINTS.flow + '?userid=1&month=' + month + '&year=' + year)
+        .then((res) =>{
+            if (!res.ok) throw new Error("Fetch failed");
+            return res.json();
+        })
+        .then((json) => {
+            const sortedData = [...json].sort((a: FlowResult, b: FlowResult) =>
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            )
+            setData(sortedData);
+            setLoading(false);
+        })
+    },[selectedMonth,itemFilter])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedMonth(e.target.value);
         console.log('選択された年月:', e.target.value);
     };
+
+    if (loading) {
+        return (
+            <div className="h-[100svh] flex flex-col justify-center items-center bg-white">
+                <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <div className="text-xl text-blue-600">Loading...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="h-[100svh] w-screen bg-green-300">
@@ -48,7 +74,7 @@ const page = () => {
                         type="month"
                         min="2020-01"
                         max="2030-12"
-                        defaultValue="2025-05"
+                        defaultValue="2025-06"
                         onChange={handleChange}
                         className="border bg-white rounded-md w-[60vw] md:w-[20vw] "
                     />
@@ -77,17 +103,33 @@ const page = () => {
                 {/* item */}
                 <div className="w-[90vw] mt-4 mx-auto bg-white rounded-lg">
                     {/* ヘッダー（固定表示） */}
-                    <div className="grid grid-cols-4 text-center font-semibold border-b">
+                    <div className="grid grid-cols-[15%_20%_20%_45%] text-center font-semibold border-b">
                         {itemName.map((value: string, index: number) => (
                         <div key={index} className="py-2">{value}</div>
                         ))}
                     </div>
                     {/* itemの中身を表示*/}
-                    <Item filter = {itemFilter} yearMonth = {selectedMonth}/>
+                    <Item filter = {itemFilter} data = {data}/>
                 </div>
                 <div className="flex flex-row p-2 md:w-[60vw]">
-                    <Hist/>
-                    <Circle expenseData = {expenseData} width = "w-[55vw]" height="h-[28svh]" budget={false}/>
+                    <Hist amounts={data.map(item => item.amount)}/>
+                    <Circle
+                    expenseData={
+                        Object.entries(
+                        data
+                            .filter(item => item.amount < 0)
+                            .reduce<Record<string, number>>((acc, item) => {
+                            const category = item.label;
+                            const amount = Math.abs(item.amount);
+                            acc[category] = (acc[category] || 0) + amount;
+                            return acc;
+                            }, {})
+                        ).map(([category, amount]) => ({ category, amount }))
+                    }
+                    width="w-[55vw]"
+                    height="h-[28svh]"
+                    budget={false}
+                    />
                 </div>
             </div>
 

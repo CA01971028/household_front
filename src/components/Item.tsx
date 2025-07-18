@@ -1,42 +1,22 @@
 'use client';
 import { useState,useEffect } from "react";
 
-type Items = {
-  "日付": string;
-  "カテゴリー": string;
-  "金額": number;
-  "メモ": string;
+type FlowResult = {
+    date: string;
+    label: string;
+    amount: number;
+    memo: string;
 };
 
 type Props = {
   filter: "All" | "Income" | "Expense";
-  yearMonth: string;
+  data:FlowResult[];
 };
+
 // yearMonthで指定された年月を表示
-const Item = ({ filter,yearMonth}: Props) => {
+const Item = ({ filter,data}: Props) => {
 
-  const [filItem,setFilItem] = useState<Items[]|null>([]); 
-
-  const expenseItems: Items[] = [
-    { "日付": "2025-01-24", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-    { "日付": "2025-01-25", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-    { "日付": "2025-02-24", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-    { "日付": "2025-02-26", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-    { "日付": "2025-03-28", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-    { "日付": "2025-03-29", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-    { "日付": "2025-03-30", "カテゴリー": "食費", "金額": -5000, "メモ": "ー" },
-  ];
-
-
-  const incomItems: Items[] = [
-    { "日付": "2025-01-24", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-    { "日付": "2025-01-25", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-    { "日付": "2025-02-24", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-    { "日付": "2025-02-26", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-    { "日付": "2025-03-28", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-    { "日付": "2025-03-29", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-    { "日付": "2025-03-30", "カテゴリー": "食費", "金額": 5000, "メモ": "ー" },
-  ];
+  const [filItem,setFilItem] = useState<FlowResult[]>(data); 
 
   const formatDate = (isoDate:string):string =>{
     const dateObj = new Date(isoDate);
@@ -46,60 +26,40 @@ const Item = ({ filter,yearMonth}: Props) => {
   }
 
   useEffect(()=>{
-    if(filter === "All"){
-       setFilItem(incomItems);
+    if(filter === "Income"){
+        setFilItem(data.filter(item => item.amount >= 0));
     }else if(filter === "Expense"){
-       setFilItem(expenseItems);
-    }else {
-       setFilItem(incomItems);
+        setFilItem(data.filter(item => item.amount < 0));
+    }else{
+        setFilItem(data);
     }
-  },[filter])
+  },[filter,data])
 
   return (
     <div
-      className="grid grid-cols-4 text-center h-[30svh] overflow-y-scroll"
-      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-    > 
-      {filter === "Expense" ?
-        (
-          filItem && filItem.map((value, index) => (
-              <div key={index} className="contents">
-                <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                  {formatDate(value["日付"])}
-                </div>
-                <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                  {value["カテゴリー"]}
-                </div>
-                <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                  {value["金額"]}
-                </div>
-                <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                  {value["メモ"]}
-                </div>
-              </div>
-            )
-          )
-        ):(
+        className="grid grid-cols-[15%_20%_20%_45%] max-h-[30svh] overflow-y-auto text-sm"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    >
+        {
             filItem && filItem.map((value, index) => (
-                <div key={index} className="contents">
-                  <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                  {formatDate(value["日付"])}
-                  </div>
-                  <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                    {value["カテゴリー"]}
-                  </div>
-                  <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                    {value["金額"]}
-                  </div>
-                  <div className={`border-b h-[5svh] text-sm flex items-center justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                    {value["メモ"]}
-                  </div>
+                <div key={index} className="contents w-full">
+                    <div className={`border-b px-2 py-1 flex justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                        {formatDate(value.date)}
+                    </div>
+                    <div className={`border-b px-2 py-1 flex justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                        {value.label}
+                    </div>
+                    <div className={`border-b px-2 py-1 flex justify-center ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                        {value.amount}
+                    </div>
+                    <div className={`border-b px-2 py-1 flex justify-start ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                        {value.memo}
+                    </div>
                 </div>
-              )
-            )
-        )
-      }
+            ))
+        }
     </div>
+
   );
 };
 
