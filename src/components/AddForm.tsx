@@ -50,7 +50,8 @@ const AddForm = () => {
       date,
       category: input,
       amount: moneyFlow ? Number(amount) : -Number(amount),
-      memo,// 仮の値。将来的にはログインユーザーから取得
+      memo,
+      userId:1,
     };
 
     try {
