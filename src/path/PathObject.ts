@@ -1,4 +1,4 @@
-export const API_BASE_URL = "https://householdback-production.up.railway.app";
+export const API_BASE_URL = "https://household-back-cxfbg9a8bgg3bugz.japaneast-01.azurewebsites.net";
 
 export const ENDPOINTS = {
     home: `${API_BASE_URL}/home/result`,
