@@ -17,6 +17,9 @@ type FlowResult = {
 
 
 const page = () => {
+    const now = new Date();
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
     //グリッドの項目を定義
     const itemName:string[] = ["日付","タグ","金額","メモ"];
     //表が表示する項目を定義
@@ -26,7 +29,7 @@ const page = () => {
     //ローディングを管理
     const [loading , setLoading] = useState<boolean>(true);
 
-    const [selectedMonth, setSelectedMonth] = useState<string>('2025-06');
+    const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
 
     useEffect(() => {
         const [year,month] = selectedMonth.split("-")
@@ -74,7 +77,7 @@ const page = () => {
                         type="month"
                         min="2020-01"
                         max="2030-12"
-                        defaultValue="2025-06"
+                        defaultValue={selectedMonth}
                         onChange={handleChange}
                         className="border bg-white rounded-md w-[60vw] md:w-[20vw] "
                     />
@@ -129,6 +132,7 @@ const page = () => {
                     width="w-[55vw]"
                     height="h-[28svh]"
                     budget={false}
+                    size = {210}
                     />
                 </div>
             </div>

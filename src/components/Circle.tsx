@@ -24,6 +24,7 @@ type CircleProps = {
   width:string;
   height:string;
   budget:boolean;
+  size:number;
 };
 
 // 色配列
@@ -63,7 +64,7 @@ const renderCustomLabel = (
 };
 
 // メインコンポーネント
-const Circle = ({ expenseData, width, height, budget }: CircleProps) => {
+const Circle = ({ expenseData, width, height, budget, size}: CircleProps) => {
   return (
     <div className={`${width} ${height} bg-white rounded-lg rounded-l-none overflow-visible flex items-center`}>
       { !isArrayEmpty(expenseData) ? (
@@ -92,13 +93,14 @@ const Circle = ({ expenseData, width, height, budget }: CircleProps) => {
               </ResponsiveContainer>
           </div>
       ):(
-            <Image
-              src={notfound}
-              alt="データがありません"
-              className="mx-auto"
-              width={210}
-              height={210}
-            />
+          <div className="w-full h-full flex justify-center items-center absolute">
+              <Image
+                src={notfound}
+                alt="データがありません"
+                width={size}
+                height={size}
+              />
+          </div>
       )
 
       }

@@ -3,5 +3,7 @@ export const API_BASE_URL = "https://household-back-cxfbg9a8bgg3bugz.japaneast-0
 export const ENDPOINTS = {
     home: `${API_BASE_URL}/home/result`,
     flow: `${API_BASE_URL}/flow/result`,
-    flowPost:`${API_BASE_URL}/flow/registration`
+    flowPost:`${API_BASE_URL}/flow/registration`,
+    budget: `${API_BASE_URL}/budget`,
+    budgetPost: `${API_BASE_URL}/budget/registration`,
 }
