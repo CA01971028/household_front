@@ -20,7 +20,10 @@ const Page = () => {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        fetch(ENDPOINTS.home + "?userId=1")
+        fetch(ENDPOINTS.home,{
+            method:"GET",
+            credentials: "include",
+        })
             .then((res) => {
                 if (!res.ok) throw new Error("Fetch failed");
                 return res.json();

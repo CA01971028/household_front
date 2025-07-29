@@ -31,7 +31,6 @@ const Form = ({ name }: FormProps) => {
       }
 
       const data = await res.json();
-      alert(data)
       console.log("ログイン成功:", data);
       // 成功時の処理（例: 遷移）
       window.location.href = '/home'; // 任意のページへ

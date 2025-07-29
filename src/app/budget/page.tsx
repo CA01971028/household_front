@@ -30,14 +30,9 @@ const Page = () => {
     const [year, month] = selectedMonth.split('-');
 
     const fetchBudget = async () => {
-      const response = await fetch(ENDPOINTS.budget, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: "1",
-          year,
-          month
-        })
+      const response = await fetch(ENDPOINTS.budgetPost + `?year=${year}&month=${month}`, {
+        method: "GET",
+        credentials: "include",
       });
       if (!response.ok) throw new Error("予算APIエラー");
       const data: ResponseData = await response.json();
@@ -55,7 +50,10 @@ const Page = () => {
     };
 
     const fetchExpenses = async () => {
-      const response = await fetch(ENDPOINTS.home + "?userId=1");
+      const response = await fetch(ENDPOINTS.home,{
+            method:"GET",
+            credentials: "include",
+      });
       if (!response.ok) throw new Error("支出APIエラー");
       const data = await response.json();
 
@@ -80,7 +78,6 @@ const Page = () => {
         await Promise.all([fetchBudget(), fetchExpenses()]);
       } catch (error) {
         console.error("データ取得失敗:", error);
-        alert("データの取得に失敗しました");
       } finally {
         setLoading(false);
       }

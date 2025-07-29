@@ -33,7 +33,6 @@ const Page = () => {
     const month = String(Number(monthStr)); // "01" → "1"
 
     const body = {
-      userId: "1", 
       category: input,
       amount: Number(amount),
       year: year,
@@ -46,6 +45,7 @@ const Page = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(body),
       });
 

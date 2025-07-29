@@ -58,6 +58,7 @@ const AddForm = () => {
       const response = await fetch(ENDPOINTS.flowPost, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(payload)
       });
 

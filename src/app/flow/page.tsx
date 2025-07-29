@@ -33,7 +33,10 @@ const page = () => {
 
     useEffect(() => {
         const [year,month] = selectedMonth.split("-")
-        fetch(ENDPOINTS.flow + '?userid=1&month=' + month + '&year=' + year)
+        fetch(ENDPOINTS.flow + '?month=' + month + '&year=' + year,{
+            method:"GET",
+            credentials:"include",
+        })
         .then((res) =>{
             if (!res.ok) throw new Error("Fetch failed");
             return res.json();
