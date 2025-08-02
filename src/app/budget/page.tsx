@@ -30,7 +30,7 @@ const Page = () => {
     const [year, month] = selectedMonth.split('-');
 
     const fetchBudget = async () => {
-      const response = await fetch(ENDPOINTS.budgetPost + `?year=${year}&month=${month}`, {
+      const response = await fetch(ENDPOINTS.budget + `?year=${year}&month=${month}`, {
         method: "GET",
         credentials: "include",
       });

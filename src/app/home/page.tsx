@@ -35,6 +35,7 @@ const Page = () => {
                         new Date(b.date).getTime() - new Date(a.date).getTime()
                 );
                 setData(sortedData);
+                console.log(sortedData)
                 setLoading(false);
 
                 // income / expenses を一括集計

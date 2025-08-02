@@ -33,7 +33,7 @@ const Form = ({ name }: FormProps) => {
       const data = await res.json();
       console.log("ログイン成功:", data);
       // 成功時の処理（例: 遷移）
-      window.location.href = '/home'; // 任意のページへ
+      // window.location.href = '/home'; // 任意のページへ
     } catch (error) {
       setErrorMessage('ユーザー名またはパスワードが間違っています');
     }
