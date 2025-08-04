@@ -1,14 +1,19 @@
-import Form from "../components/Form"
+'use client';
 
+import Form from "../components/Form";
+import { useAuthCheck } from "../app/hooks/useAuthCheck"
 
 export default function Home() {
+  const { loading } = useAuthCheck({
+    requireAuth: false,      // 認証不要なページ（ログイン前）
+    redirectTo: '/home',     // 認証済みならここに飛ばす
+  });
+
+  if (loading) return null; // チェック中は何も表示しない（もしくはローディングUIに）
 
   return (
-    <>
-      <div className="h-svh w-screen bg-green-300 flex items-center justify-center">
-        <Form name = {"サインイン"}/>
-      </div>
-    </>
-    
+    <div className="h-svh w-screen bg-green-300 flex items-center justify-center">
+      <Form name="サインイン" />
+    </div>
   );
 }
