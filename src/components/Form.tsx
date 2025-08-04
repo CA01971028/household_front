@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ENDPOINTS } from '@/path/PathObject';
 
@@ -12,7 +12,7 @@ const Form = ({ name }: FormProps) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleSubmit = async () => {
     try {
@@ -38,7 +38,7 @@ const Form = ({ name }: FormProps) => {
       console.log(`${name} 成功:`, data);
 
       // 成功時に /home へ遷移（戻れないようにする）
-      router.replace('/home');
+      // router.replace('/home');
     } catch (error) {
       setErrorMessage('ユーザー名またはパスワードが正しくありません');
     }
