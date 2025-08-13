@@ -9,8 +9,11 @@ export const useAuthCheck = ({
   redirectTo = '/home', // ログイン済みならリダイレクトする先
   fallbackTo = '/signin', // 未ログインなら遷移させる先
 } = {}) => {
+  //ローディングを管理
   const [loading, setLoading] = useState(true);
+  //認証状態を管理
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  //ルーターを作成
   const router = useRouter();
 
   useEffect(() => {
